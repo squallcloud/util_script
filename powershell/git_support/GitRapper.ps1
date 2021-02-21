@@ -11,8 +11,12 @@ class GitRapper {
         $proc = Start-Process -FilePath $this.m_commandName -ArgumentList "add `"${in_path}`"" -NoNewWindow -Wait
         return $proc.ExitCode
     }
-    [int] ExecCommit($in_path, $in_comment) {
-        $proc = Start-Process -FilePath $this.m_commandName -ArgumentList "commit `"${in_path}`" -m `"${in_comment}`"" -NoNewWindow -Wait
+    [int] ExecCommit($in_comments) {
+        $comment = ""
+        foreach ($c in $in_comments) {
+            $comment = "${comment} -m `"${c}`""
+        }
+        $proc = Start-Process -FilePath $this.m_commandName -ArgumentList "commit ${comment}" -NoNewWindow -Wait
         return $proc.ExitCode
     }
 }
